@@ -1,60 +1,123 @@
 # 🧩 CRUD com Express.js e Supabase
 
-Este projeto é um CRUD simples utilizando **Express.js** para o backend e **Supabase** como banco de dados. Ele está estruturado por controllers, routes e services.
+Este projeto é um CRUD simples utilizando **Express.js** para o backend e **Supabase** como banco de dados.
 
 ---
 
-## ⚙️ Estrutura do Projeto
-
-- **controllers/**: lógica das operações
-- **routes/**: definição das rotas da API
-- **services/**: inicializa e configura o servidor Express
-
+## 🚀 Tecnologias Utilizadas
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [Supabase](https://supabase.com/)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [CORS](https://www.npmjs.com/package/cors)
+  
 ---
 
-## 🚧 Observações Importantes
+## 📂 Estrutura do Projeto
+```
+📦 projeto
+ ┣ 📜 client.js     # Código da API
+ ┣ 📜 .env          # Variáveis de ambiente (URL e KEY do Supabase)
+ ┣ 📜 package.json
+ ┗ 📜 README.md
+```
 
-- O CRUD **ainda não está funcionando com requisições via Postman**.
-- O projeto foi programado para **listar, criar, ler, atualizar e apagar informações de clientes**.
-- O código foi desenvolvido de forma estruturada para facilitar futuras melhorias.
+## ⚙️ Configuração do Ambiente
 
----
-
-# 🚀 Como Rodar o Projeto CRUD com Express.js e Supabase
-
-Este guia rápido vai te ajudar a configurar e executar o projeto localmente.
-
----
-
-## Pré-requisitos
-
-- [Node.js](https://nodejs.org/) instalado
-- Conta no [Supabase](https://supabase.com/) com um projeto configurado
-- Editor de código (ex: VS Code)
-- Postman ou outro cliente HTTP para testar as APIs (opcional)
-
----
-
-## Passo 1: Clone o repositório
-
-Abra o terminal e rode:
-
+### 1️⃣ Clonar o repositório
+```bash
 git clone https://github.com/seu-usuario/seu-repositorio.git
 cd seu-repositorio
+```
+
+### 2️⃣ Instalar dependências
+```bash
+npm install express cors dotenv @supabase/supabase-js
+```
+
+### 3️⃣ Configurar variáveis de ambiente  
+Crie um arquivo `.env` na raiz do projeto:
+```env
+SUPABASE_URL=https://sua-url-do-supabase.supabase.co
+SUPABASE_KEY=sua-chave-do-supabase
+PORT=3000
+```
 
 ---
 
-## 1. Inicializar o projeto Node.js
+## ▶️ Executando o Projeto
+```bash
+node client.js
+```
+A API estará disponível em:
+```
+http://localhost:3000
+```
 
-No terminal, dentro da pasta do seu projeto, execute:
+---
 
-npm init -y
+## 📌 Endpoints da API
 
-## 2. Instalar as dependencias
+### 🔹 Criar Cliente
+**POST** `/clientes`
+```json
+{
+  "nome": "João Silva",
+  "email": "joao@email.com"
+}
+```
+**Respostas:**
+- `201` → Cliente criado com sucesso
+- `400` → Campos obrigatórios ausentes
 
-npm install express dotenv @supabase/supabase-js
+---
 
-## 3. Criar arquivo .env
+### 🔹 Listar Clientes
+**GET** `/clientes`
+
+**Respostas:**
+- `200` → Lista de clientes
+- `400` → Erro na consulta
+
+---
+
+### 🔹 Atualizar Cliente
+**PUT** `/clientes/:id`
+```json
+{
+  "nome": "Maria Souza",
+  "email": "maria@email.com"
+}
+```
+**Respostas:**
+- `200` → Cliente atualizado
+- `404` → Cliente não encontrado
+- `400` → Nenhum campo informado
+
+---
+
+### 🔹 Deletar Cliente
+**DELETE** `/clientes/:id`
+
+**Respostas:**
+- `204` → Cliente deletado com sucesso
+- `400` → Erro na exclusão
+
+---
+
+## 🛠 Observações
+- Certifique-se de que a tabela **clientes** exista no seu banco Supabase com os campos:
+  - `id` (Primary Key, Auto Increment)
+  - `nome` (Texto)
+  - `email` (Texto)
+- Caso a tabela não exista, crie-a pelo painel do Supabase ou via SQL:
+```sql
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL
+);
+```
 
 SUPABASE_URL=https://sua-url.supabase.co
 SUPABASE_KEY=sua-chave-api
